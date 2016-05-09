@@ -21,6 +21,9 @@ public class Maze {
 	
 	/**
 	 * generates a maze of size roiws X columns
+	 * 
+	 * if the edge exist on the ensemble. add to the maze. else add to an ensemble.
+	 * 
 	 */
 	public Maze(int rows, int columns) {
 		this.rows = rows;
@@ -38,7 +41,42 @@ public class Maze {
 	 * Collections.shuffle
 	 */
 	private void generateMaze() {
-	    // TO COMPLETE
+		Random n = new Random();
+	    for ( int i = 0; i < rows; i++){
+	    	for (int j = 0; j < columns; j++){
+	    		grid.add(new Edge(i, j));
+	    	}
+	    }
+	    
+	    Collections.shuffle(grid);
+	    int x;
+	    int y;
+	    int racine1;
+	    int racine2;
+	    DisjointSets set = new DisjointSets(grid.size());
+	    for (int i = 0; i < grid.size(); i++){
+	    	x = grid.get(i).x;
+	    	y = grid.get(i).y;
+	    	racine1 = set.find(x);
+	    	racine2 = set.find(y);
+	    	set.union(racine1, racine2);
+	    }
+	    
+	    
+	    
+//	    int cpt = 0;
+//	    
+//	    while ( cpt + columns < columns * rows){
+//	    	maze.add(new Edge(cpt, cpt + columns));
+//	    	cpt = cpt + 1;
+//	    }
+//	    cpt = 0;
+//	    while ( cpt +1 < rows * columns){
+//	    	maze.add(new Edge(cpt, cpt+1));
+//	    	cpt ++;
+//	    }
+	   	   
+	    
 	}
 	
 	//////////////// toString (DON'T CHANGE THIS PART)
@@ -52,6 +90,7 @@ public class Maze {
 			s += vertical(i) + horizontal(i);
 		return s += vertical(rows - 1) + topbot();
 	}
+	
 	
 	/**
 	 * returns the top-bottom line of the maze

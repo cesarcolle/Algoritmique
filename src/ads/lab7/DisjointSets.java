@@ -18,6 +18,12 @@ public class DisjointSets {
 	 * {0}, {1}, {2}, ..., {n-1}
 	 */
 	public DisjointSets(int n) {
+		faze = new int[n];
+		numSets = n;
+		for (int i = 0; i < n; i++){
+			faze[i] = i;
+			
+		}
 
 	}
 	
@@ -36,7 +42,15 @@ public class DisjointSets {
 	 * path compression
 	 */
 	public int find(int i) {
-		return 0;
+		if (faze[i] == i){
+			return i;
+		}
+		while( faze[i]  > 0){
+			System.out.println("faze = " +faze[i]);
+			i = faze[i];
+		}
+		
+		return i;
 
 	}
 	
@@ -45,6 +59,12 @@ public class DisjointSets {
 	 * of roots root1 and root2
 	 */
 	public void union(int root1, int root2) {
+		faze[root2] = faze[root1];
+		if (faze[root1] > 0){
+			faze[root1] = -1;
+		}
+		
+		faze[root1] = faze[root1] -1;
 
 	}
 	
